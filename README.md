@@ -2,6 +2,21 @@ pyronic
 =======
 Run a program and silence its output, unless it fails.
 
+# Usage
+```
+usage: pyronic [-h] [-V] [-v] [-s] ...
+
+positional arguments:
+  command
+
+optional arguments:
+  -h, --help      show this help message and exit
+  -V, --version   show program's version number and exit
+  -v, --verbose   Include additional output on failure
+  -s, --separate  Separate stdout/stderr rather than combining
+```
+
+# Background
 pyronic is a replacement for [chronic](https://joeyh.name/code/moreutils/).
 
 One key difference is that pyronic, in its default mode, will preserve the
