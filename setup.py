@@ -9,7 +9,7 @@ def read_project_file(path):
 
 setup(
     name = 'pyronic',
-    version = '0.1.0',
+    version = '0.1.1',
     description = 'Suppress command output on success',
     long_description = read_project_file('README.md'),
     long_description_content_type = 'text/markdown',
