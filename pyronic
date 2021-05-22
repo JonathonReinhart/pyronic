@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-import contextlib
 import shutil
 import subprocess
 import sys
@@ -22,6 +21,18 @@ def printv(*args, **kwargs):
 def copyout(f):
     f.seek(0)
     shutil.copyfileobj(f, sys.stdout.buffer)
+
+
+class nullcontext:
+    # TODO: Use contextlib.nullcontext when we support Python >= 3.7
+    def __init__(self, enter_result=None):
+        self.enter_result = enter_result
+
+    def __enter__(self):
+        return self.enter_result
+
+    def __exit__(self, *excinfo):
+        pass
 
 
 def parse_args():
@@ -53,7 +64,7 @@ def main():
     if args.separate:
         errf = tempfile.SpooledTemporaryFile(prefix=APPNAME, suffix='.err')
     else:
-        errf = contextlib.nullcontext(subprocess.STDOUT)
+        errf = nullcontext(subprocess.STDOUT)
 
     with outf as outf, errf as errf:
         rc = subprocess.call(
