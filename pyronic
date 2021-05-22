@@ -1,0 +1,45 @@
+#!/usr/bin/env python3
+import shutil
+import subprocess
+import sys
+import tempfile
+
+__version__ = '0.0.0'
+
+APPNAME = 'pyronic'
+
+
+def parse_args():
+    import argparse
+    ap = argparse.ArgumentParser()
+    ap.add_argument('-V', '--version', action='version',
+            version=APPNAME + ' ' +__version__)
+    ap.add_argument('command', nargs=argparse.REMAINDER)
+
+    args = ap.parse_args()
+    if not args.command:
+        ap.error("No command given")
+
+    return args
+
+
+def main():
+    args = parse_args()
+
+    outf = tempfile.SpooledTemporaryFile(prefix=APPNAME, suffix='.out')
+    with outf:
+        rc = subprocess.call(
+                args = args.command,
+                stdout = outf,
+                stderr = subprocess.STDOUT,
+                )
+        if rc == 0:
+            return
+
+        outf.seek(0)
+        shutil.copyfileobj(outf, sys.stdout.buffer)
+
+        sys.exit(rc)
+
+if __name__ == '__main__':
+    main()

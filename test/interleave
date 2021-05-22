@@ -1,0 +1,11 @@
+#!/bin/bash
+echo "1 stdout"
+echo "2 stdout"
+echo "3 stderr" 1>&2
+echo "4 stdout"
+echo "5 stderr" 1>&2
+echo "6 stderr" 1>&2
+echo "7 stdout"
+echo "8 stderr" 1>&2
+echo "9 stdout"
+exit 1
